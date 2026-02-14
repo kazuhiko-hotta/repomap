@@ -87,5 +87,5 @@ You can still run `python -m repomap` directly if you like, but these helper scr
 
 ## Notes
 - `repo_map.md` is intended to be human-readable; regenerate it whenever the import landscape or directory layout changes.
-- The CLI respects `.gitignore` entries (top-level only) and sorts directories/imports for consistent diffs.
+- The CLI respects `.gitignore` entries at all directory levels (hierarchical .gitignore support with pathspec). Patterns such as `*`, `?`, `**/` and negation (`!`) are fully supported.
 - Keep `AGENTS.md` untouched—it's the global agent guide.

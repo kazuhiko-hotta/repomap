@@ -1,4 +1,5 @@
 """Command-line interface for the repomap helpers."""
+
 from __future__ import annotations
 
 import sys
@@ -72,7 +73,7 @@ def main(argv: Iterable[str] | None = None) -> int:
 
     root = Path(args.root).resolve()
     extra_excludes = [entry for entry in args.exclude if entry]
-    exclude_set = build_exclude_set(root, extra_excludes)
+    exclude_set, gitignore_rules = build_exclude_set(root, extra_excludes)
 
     if args.show_defaults:
         print(f"Default excludes: {', '.join(sorted(DEFAULT_EXCLUDE))}")
@@ -80,10 +81,13 @@ def main(argv: Iterable[str] | None = None) -> int:
 
     if args.list_excludes:
         print(f"Combined excludes: {_format_excludes(exclude_set)}")
-        print("Use --exclude to add entries beyond what Git and the defaults already ignore.")
+        print("Hierarchical .gitignore rules are also respected in all subdirectories.")
+        print(
+            "Use --exclude to add entries beyond what Git and the defaults already ignore."
+        )
         return 0
 
-    report = generate_repo_report(root, exclude_set)
+    report = generate_repo_report(root, exclude_set, gitignore_rules)
     lines = render_repo_map(report, exclude_set)
     output_text = "\n".join(lines).rstrip()
 
