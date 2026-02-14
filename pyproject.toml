@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repomap"
+version = "0.1.0"
+description = "Lightweight repo map generator for AI-assisted reviews"
+requires-python = ">=3.13"
+dependencies = []
+
+[project.optional-dependencies]
+testing = ["pytest"]
+
+[project.scripts]
+repomap = "repomap.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
